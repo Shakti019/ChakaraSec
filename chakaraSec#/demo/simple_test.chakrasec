@@ -1,0 +1,38 @@
+asset "test_asset" {
+    layers = 7;
+    
+    layer 1 {
+        policy = MFA(2);
+        action_on_fail = DENY();
+    }
+    
+    layer 2 {
+        policy = DEVICE("test_key");
+        action_on_fail = DENY();
+    }
+    
+    layer 3 {
+        policy = PUZZLE("matrix", 64);
+        action_on_fail = DENY();
+    }
+    
+    layer 4 {
+        policy = MFA(1);
+        action_on_fail = DENY();
+    }
+    
+    layer 5 {
+        policy = RATE_LIMIT(10, 60);
+        action_on_fail = DENY();
+    }
+    
+    layer 6 {
+        policy = TIME_WINDOW("09:00", "17:00");
+        action_on_fail = DENY();
+    }
+    
+    layer 7 {
+        policy = GEO(40.7128, -74.0060, 1000);
+        action_on_fail = DENY();
+    }
+}
